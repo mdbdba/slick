@@ -3,29 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/mdbdba/slick/utils"
+	"net/http"
 )
 
-// type T struct {
-// 	Tests []struct {
-// 		MetricBaseName               string      `json:"metric_base_name"`
-// 		MetricType                   string      `json:"metric_type"`
-// 		MetricDesc                   string      `json:"metric_desc"`
-// 		ExecutionMethod              string      `json:"execution_method"`
-// 		Url                          string      `json:"url"`
-// 		ExecutionDefinition          string      `json:"execution_definition"`
-// 		ResponseType                 string      `json:"response_type"`
-// 		ComparisonKey                string      `json:"comparison_key"`
-// 		ResponseEvaluationIdentifier string      `json:"response_evaluation_identifier"`
-// 		ComparisonValue              interface{} `json:"comparison_value"`
-// 	} `json:"tests"`
-// }
-
 func main() {
-	// 	file, _ := ioutil.ReadFile("./examples/compose/tests/sre-roller-tests.json")
-
-	// data := T{}
-
-	// _ = json.Unmarshal([]byte(file), &data)
 
 	testdefs := utils.GetTestDefs("./examples/compose/tests/sre-roller-tests.json")
 	for i := 0; i < len(testdefs.Tests); i++ {
@@ -34,10 +15,18 @@ func main() {
 		fmt.Println("Metric Description: ", testdefs.Tests[i].MetricDesc)
 		fmt.Println("Execution Method: ", testdefs.Tests[i].ExecutionMethod)
 		fmt.Println("Url: ", testdefs.Tests[i].Url)
-		fmt.Println("Execution Definition: ", testdefs.Tests[i].ExecutionMethod)
+		fmt.Println("Execution Definition: ", testdefs.Tests[i].ExecutionDefinition)
 		fmt.Println("ResponseType: ", testdefs.Tests[i].ResponseType)
 		fmt.Println("Comparison Key: ", testdefs.Tests[i].ComparisonKey)
 		fmt.Println("Response Eval Identifier: ", testdefs.Tests[i].ResponseEvaluationIdentifier)
 		fmt.Println("Comparision Value ", testdefs.Tests[i].ComparisonValue)
+		if testdefs.Tests[i].ExecutionMethod == "url" {
+			test_call := testdefs.Tests[i].Url + "/" + testdefs.Tests[i].ExecutionDefinition
+			fmt.Println("Testing :", test_call)
+			resp, err := http.Get(test_call)
+			fmt.Println("Response: ", resp)
+			fmt.Println("Error: ", err)
+		}
+
 	}
 }
