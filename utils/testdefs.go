@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 )
 
-type T struct {
+type TestDefs struct {
 	Tests []struct {
 		MetricBaseName               string      `json:"metric_base_name"`
 		MetricType                   string      `json:"metric_type"`
@@ -20,10 +20,10 @@ type T struct {
 	} `json:"tests"`
 }
 
-func GetTestDefs(fp string) T {
+func GetTestDefs(fp string) TestDefs {
 	file, _ := ioutil.ReadFile(fp)
 
-	data := T{}
+	data := TestDefs{}
 
 	_ = json.Unmarshal([]byte(file), &data)
 
