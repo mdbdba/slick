@@ -13,6 +13,15 @@ services:
       - "9411:9411"
     networks:
       - slick-example
+
+  aggregation:
+    image: weaveworks/prom-aggregation-gateway:latest
+    container_name: aggregation_gwy_slick
+    ports:
+      - "8888:80"
+    networks:
+      - slick-example
+
   roller:
     image: mdbdba/roller:latest
     container_name: roller_slick
@@ -24,6 +33,7 @@ services:
       - slick-example
     depends_on:
       - jaeger
+      - aggregation
 
 networks:
   slick-example:

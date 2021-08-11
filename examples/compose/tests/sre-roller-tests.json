@@ -1,6 +1,6 @@
 {
   "tests": [{
-    "metric_base_name": "happy_path_1",
+    "metric_base_name": "roller_1_happy_path",
     "metric_type": "counter",
     "metric_desc": "test first happy path through roller and report success or failure.",
     "execution_method": "url",
@@ -12,7 +12,7 @@
     "comparison_value": 5
   },
     {
-      "metric_base_name": "happy_path_2",
+      "metric_base_name": "roller_2_happy_path",
       "metric_type": "counter",
       "metric_desc": "test second happy path through roller and report success or failure.",
       "execution_method": "url",
