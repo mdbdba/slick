@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 type responseT struct {
@@ -13,9 +14,11 @@ type responseT struct {
 	Traceid string `json:"traceid"`
 }
 
-func GetTestResult(url string) []responseT {
+func GetTestResult(url string) ([]responseT, float64) {
 	var bodyArray []responseT
+	start := time.Now()
 	resp, err := http.Get(url)
+	duration := time.Since(start)
 	if err != nil {
 		fmt.Println("Error: ", err)
 	} else {
@@ -32,5 +35,5 @@ func GetTestResult(url string) []responseT {
 			}
 		}
 	}
-	return bodyArray
+	return bodyArray, duration.Seconds()
 }
